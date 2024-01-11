@@ -15,14 +15,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatbotChat {
+public class ProfessorChat {
 
     @EmbeddedId
     private ProfessorChatId professorChatId;
 
-    private String question;
+    private String comment;
 
-    private String answer;
+    private LocalDateTime createdAt;
 
-    private LocalDateTime created_at;
+    private Boolean question;
 }
