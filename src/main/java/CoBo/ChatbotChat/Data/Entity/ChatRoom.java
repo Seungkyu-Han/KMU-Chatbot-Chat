@@ -1,10 +1,7 @@
 package CoBo.ChatbotChat.Data.Entity;
 
 import CoBo.ChatbotChat.Data.Enum.ChatStateEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -20,4 +17,7 @@ public class ChatRoom {
 
     @Enumerated(EnumType.ORDINAL)
     private ChatStateEnum state;
+
+    @Column(length = 30)
+    private String name;
 }
