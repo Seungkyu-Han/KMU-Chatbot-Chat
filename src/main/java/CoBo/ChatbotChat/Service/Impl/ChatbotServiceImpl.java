@@ -4,5 +4,5 @@ import CoBo.ChatbotChat.Service.ChatbotService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ChatServiceImpl implements ChatbotService {
+public class ChatbotServiceImpl implements ChatbotService {
 }
