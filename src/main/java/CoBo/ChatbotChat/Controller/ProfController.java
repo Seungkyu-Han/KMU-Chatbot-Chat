@@ -62,6 +62,16 @@ public class ProfController {
 
     @PostMapping
     @Operation(summary = "교수의 답변 작성 API", description = "교수가 학생의 질문에 대한 답변을 작성함")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공",
+                    content = @Content()),
+            @ApiResponse(responseCode = "403", description = "인증 실패",
+                    content = @Content()),
+            @ApiResponse(responseCode = "502", description = "데이터베이스에서 에러가 발생했습니다.\n관리자에게 문의해주세요.",
+                    content = @Content()),
+            @ApiResponse(responseCode = "504", description = "현재 데이터베이스에 연결할 수 없습니다.",
+                    content = @Content())
+    })
     public ResponseEntity<HttpStatus> post(@RequestBody ProfPostReq profPostReq){
         return chatService.post(profPostReq);
     }
