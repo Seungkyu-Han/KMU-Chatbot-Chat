@@ -2,8 +2,10 @@ package CoBo.ChatbotChat.Service.Impl;
 
 import CoBo.ChatbotChat.Data.Dto.Prof.Res.ChatGetElementRes;
 import CoBo.ChatbotChat.Data.Dto.Prof.Res.ChatGetRes;
+import CoBo.ChatbotChat.Data.Dto.Prof.Res.ProfGetListRes;
 import CoBo.ChatbotChat.Data.Entity.ProfessorChat;
 import CoBo.ChatbotChat.Data.Enum.ChatStateEnum;
+import CoBo.ChatbotChat.Repository.ChatRoomRepository;
 import CoBo.ChatbotChat.Repository.ProfessorChatRepository;
 import CoBo.ChatbotChat.Service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.List;
 public class ChatServiceImpl implements ChatService {
 
     private final ProfessorChatRepository professorChatRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
     @Override
     public ResponseEntity<ChatGetRes> get(Integer studentId) {
@@ -39,5 +42,11 @@ public class ChatServiceImpl implements ChatService {
         }
 
         return new ResponseEntity<>(new ChatGetRes(chatGetElementResList), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ProfGetListRes> getList(Integer page, Integer pageSize) {
+        return new ResponseEntity<>(
+                new ProfGetListRes(chatRoomRepository.count(), chatRoomRepository.findWithLastChatByPaging(page, pageSize)), HttpStatus.OK);
     }
 }
