@@ -21,7 +21,7 @@ public class ProfController {
 
     private final ChatService chatService;
 
-    @GetMapping("")
+    @GetMapping
     @Operation(summary = "학생 질문 조회 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",
