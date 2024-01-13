@@ -1,22 +1,22 @@
 package CoBo.ChatbotChat.Data.Dto.Prof.Res;
 
-import CoBo.ChatbotChat.Data.Enum.ChatStateEnum;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import CoBo.ChatbotChat.Data.Entity.ProfessorChat;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class ChatGetElementRes {
 
     String comment;
 
     LocalDateTime time;
 
-    ChatStateEnum state;
+    Boolean isQuestion;
+
+    public ChatGetElementRes(ProfessorChat professorChat) {
+        this.comment = professorChat.getComment();
+        this.time = professorChat.getCreatedAt();
+        this.isQuestion = professorChat.getQuestion();
+    }
 }
