@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatGetRes {
+public class ProfStdGetRes {
 
-    List<ChatGetElementRes> chatGetElementResList;
+    List<ProfStdGetElementRes> profStdGetElementResList;
 }

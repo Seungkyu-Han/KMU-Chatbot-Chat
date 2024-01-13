@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ChatGetElementRes {
+public class ProfStdGetElementRes {
 
     String comment;
 
@@ -14,7 +14,7 @@ public class ChatGetElementRes {
 
     Boolean isQuestion;
 
-    public ChatGetElementRes(ProfessorChat professorChat) {
+    public ProfStdGetElementRes(ProfessorChat professorChat) {
         this.comment = professorChat.getComment();
         this.time = professorChat.getCreatedAt();
         this.isQuestion = professorChat.getQuestion();
