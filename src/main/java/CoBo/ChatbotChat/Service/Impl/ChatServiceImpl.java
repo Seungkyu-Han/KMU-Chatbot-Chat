@@ -1,8 +1,9 @@
 package CoBo.ChatbotChat.Service.Impl;
 
+import CoBo.ChatbotChat.Config.Jwt.JwtTokenProvider;
 import CoBo.ChatbotChat.Data.Dto.Prof.Req.ProfPostReq;
-import CoBo.ChatbotChat.Data.Dto.Prof.Res.ChatGetElementRes;
-import CoBo.ChatbotChat.Data.Dto.Prof.Res.ChatGetRes;
+import CoBo.ChatbotChat.Data.Dto.Prof.Res.ProfStdGetElementRes;
+import CoBo.ChatbotChat.Data.Dto.Prof.Res.ProfStdGetRes;
 import CoBo.ChatbotChat.Data.Dto.Prof.Res.ProfGetListRes;
 import CoBo.ChatbotChat.Data.Entity.ProfessorChat;
 import CoBo.ChatbotChat.Data.Enum.ChatStateEnum;
@@ -25,19 +26,20 @@ public class ChatServiceImpl implements ChatService {
 
     private final ProfessorChatRepository professorChatRepository;
     private final ChatRoomRepository chatRoomRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public ResponseEntity<ChatGetRes> get(Integer studentId) {
+    public ResponseEntity<ProfStdGetRes> get(Integer studentId) {
 
         List<ProfessorChat> professorChatList = professorChatRepository.findByStudentId(studentId);
         chatRoomRepository.updateStateById(studentId, ChatStateEnum.CONFIRMATION.ordinal());
 
-        ArrayList<ChatGetElementRes> chatGetElementResList = new ArrayList<>();
+        ArrayList<ProfStdGetElementRes> chatGetElementResList = new ArrayList<>();
 
         for (ProfessorChat professorChat : professorChatList)
-            chatGetElementResList.add(new ChatGetElementRes(professorChat));
+            chatGetElementResList.add(new ProfStdGetElementRes(professorChat));
 
-        return new ResponseEntity<>(new ChatGetRes(chatGetElementResList), HttpStatus.OK);
+        return new ResponseEntity<>(new ProfStdGetRes(chatGetElementResList), HttpStatus.OK);
     }
 
     @Override
@@ -53,5 +55,20 @@ public class ChatServiceImpl implements ChatService {
         chatRoomRepository.updateStateById(profPostReq.getStudentId(), ChatStateEnum.COMPLETE.ordinal());
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ProfStdGetRes> getStudent(String authorization) {
+        String token = authorization.split(" ")[1];
+        Integer studentId = jwtTokenProvider.getStudentId(token);
+
+        List<ProfessorChat> professorChatList = professorChatRepository.findByStudentId(studentId);
+
+        ArrayList<ProfStdGetElementRes> chatGetElementResList = new ArrayList<>();
+
+        for (ProfessorChat professorChat : professorChatList)
+            chatGetElementResList.add(new ProfStdGetElementRes(professorChat));
+
+        return new ResponseEntity<>(new ProfStdGetRes(chatGetElementResList), HttpStatus.OK);
     }
 }
