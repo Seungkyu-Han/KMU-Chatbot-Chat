@@ -1,7 +1,7 @@
 package CoBo.ChatbotChat.Controller;
 
 import CoBo.ChatbotChat.Data.Dto.Prof.Req.ProfPostReq;
-import CoBo.ChatbotChat.Data.Dto.Prof.Res.ChatGetRes;
+import CoBo.ChatbotChat.Data.Dto.Prof.Res.ProfStdGetRes;
 import CoBo.ChatbotChat.Data.Dto.Prof.Res.ProfGetListRes;
 import CoBo.ChatbotChat.Service.ChatService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +36,7 @@ public class ProfController {
             @ApiResponse(responseCode = "504", description = "현재 데이터베이스에 연결할 수 없습니다.",
                     content = @Content())
     })
-    public ResponseEntity<ChatGetRes> get(@RequestParam Integer studentId) {
+    public ResponseEntity<ProfStdGetRes> get(@RequestParam Integer studentId) {
         return chatService.get(studentId);
     }
 
