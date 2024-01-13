@@ -26,10 +26,16 @@ public class ProfController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공",
                     content = @Content()),
+            @ApiResponse(responseCode = "403", description = "인증 실패",
+                    content = @Content()),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 대화입니다.",
+                    content = @Content()),
+            @ApiResponse(responseCode = "502", description = "데이터베이스에서 에러가 발생했습니다.\n관리자에게 문의해주세요.",
+                    content = @Content()),
+            @ApiResponse(responseCode = "504", description = "현재 데이터베이스에 연결할 수 없습니다.",
                     content = @Content())
     })
-    public ResponseEntity<ChatGetRes> get(@RequestParam("studentId") Integer studentId) {
+    public ResponseEntity<ChatGetRes> get(@RequestParam Integer studentId) {
         return chatService.get(studentId);
     }
 
@@ -38,6 +44,16 @@ public class ProfController {
     @Parameters({
             @Parameter(name = "page", description = "페이지 번호", example = "0"),
             @Parameter(name = "pageSize", description = "한 페이지에 들어갈 질문의 개수", example = "20")
+    })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공",
+                    content = @Content()),
+            @ApiResponse(responseCode = "403", description = "인증 실패",
+                    content = @Content()),
+            @ApiResponse(responseCode = "502", description = "데이터베이스에서 에러가 발생했습니다.\n관리자에게 문의해주세요.",
+                    content = @Content()),
+            @ApiResponse(responseCode = "504", description = "현재 데이터베이스에 연결할 수 없습니다.",
+                    content = @Content())
     })
     public ResponseEntity<ProfGetListRes> getList(Integer page, Integer pageSize){
         return chatService.getList(page, pageSize);
