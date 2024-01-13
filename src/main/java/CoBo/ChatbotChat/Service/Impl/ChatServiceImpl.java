@@ -27,19 +27,12 @@ public class ChatServiceImpl implements ChatService {
     public ResponseEntity<ChatGetRes> get(Integer studentId) {
 
         List<ProfessorChat> professorChatList = professorChatRepository.findByStudentId(studentId);
-
-        if (professorChatList.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        chatRoomRepository.updateStateById(studentId, ChatStateEnum.CONFIRMATION.ordinal());
 
         ArrayList<ChatGetElementRes> chatGetElementResList = new ArrayList<>();
 
-        for (ProfessorChat professorChat : professorChatList) {
-            chatGetElementResList.add(new ChatGetElementRes(
-                    professorChat.getComment(),
-                    professorChat.getCreatedAt(),
-                    ChatStateEnum.CONFIRMATION
-            ));
-        }
+        for (ProfessorChat professorChat : professorChatList)
+            chatGetElementResList.add(new ChatGetElementRes(professorChat));
 
         return new ResponseEntity<>(new ChatGetRes(chatGetElementResList), HttpStatus.OK);
     }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,5 +31,12 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
                         new ChatRoomDao(
                                 resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getString(4), resultSet.getTimestamp(5)
                         ), page, pageSize);
+    }
+
+    @Override
+    @Transactional
+    public void updateStateById(Integer studentId, int state) {
+        String sql = "UPDATE chat_room SET state = ? WHERE student_id = ?";
+        jdbcTemplate.update(sql, state, studentId);
     }
 }
