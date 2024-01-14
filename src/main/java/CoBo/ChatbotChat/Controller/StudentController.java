@@ -28,6 +28,10 @@ public class StudentController {
             @ApiResponse(responseCode = "200", description = "성공",
                     content = @Content()),
             @ApiResponse(responseCode = "403", description = "인증 실패",
+                    content = @Content()),
+            @ApiResponse(responseCode = "502", description = "데이터베이스에서 에러가 발생했습니다.\n관리자에게 문의해주세요.",
+                    content = @Content()),
+            @ApiResponse(responseCode = "504", description = "현재 데이터베이스에 연결할 수 없습니다.",
                     content = @Content())
     })
     public ResponseEntity<ProfStdGetRes> getStudent(@Valid @NotNull @Parameter(hidden = true) @RequestHeader("Authorization") String authorization) {
@@ -37,7 +41,12 @@ public class StudentController {
     @PostMapping
     @Operation(summary = "학생이 교수에게 질문 작성")
     @ApiResponses({
-
+            @ApiResponse(responseCode = "200", description = "성공", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "인증 실패", content = @Content()),
+            @ApiResponse(responseCode = "502", description = "데이터베이스에서 에러가 발생했습니다.\n관리자에게 문의해주세요.",
+                    content = @Content()),
+            @ApiResponse(responseCode = "504", description = "현재 데이터베이스에 연결할 수 없습니다.",
+                    content = @Content())
     })
     public ResponseEntity<HttpStatus> postStudent(@RequestBody StudentPostReq studentPostReq, @Parameter(hidden = true) @RequestHeader("Authorization") String authorization){
         return chatService.postStudent(studentPostReq, authorization);
