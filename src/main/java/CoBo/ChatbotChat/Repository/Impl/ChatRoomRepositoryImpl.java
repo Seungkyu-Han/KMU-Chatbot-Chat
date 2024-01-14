@@ -22,9 +22,8 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
     public List<ChatRoomDao> findWithLastChatByPaging(Integer page, Integer pageSize) {
         String sql = "SELECT cr.student_id, cr.name, cr.state, pc.comment, pc.created_at FROM chat_room cr " +
                 "JOIN professor_chat pc on cr.student_id = pc.chat_room_student_id " +
-                "WHERE pc.id = (" +
-                "SELECT MAX(id) FROM professor_chat WHERE pc.chat_room_student_id = cr.student_id" +
-                ") " +
+                "WHERE (pc.id, pc.chat_room_student_id) in (" +
+                "SELECT MAX(id), chat_room_student_id FROM professor_chat group by chat_room_student_id)" +
                 "ORDER BY state, student_id LIMIT ?, ?";
         return jdbcTemplate.query(sql,
                 (resultSet, count) ->
@@ -38,5 +37,12 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
     public void updateStateById(Integer studentId, int state) {
         String sql = "UPDATE chat_room SET state = ? WHERE student_id = ?";
         jdbcTemplate.update(sql, state, studentId);
+    }
+
+    @Override
+    @Transactional
+    public void updateIfExistElseInsert(Integer studentId, int state, String name) {
+        String sql = "INSERT INTO chat_room (student_id, state, name) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE state = ?, name = ?";
+        jdbcTemplate.update(sql, studentId, state, name, state, name);
     }
 }
