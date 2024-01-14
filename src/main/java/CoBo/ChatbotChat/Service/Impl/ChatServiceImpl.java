@@ -1,6 +1,7 @@
 package CoBo.ChatbotChat.Service.Impl;
 
 import CoBo.ChatbotChat.Config.Jwt.JwtTokenProvider;
+import CoBo.ChatbotChat.Data.Dto.Chat.Req.StudentPostReq;
 import CoBo.ChatbotChat.Data.Dto.Prof.Req.ProfPostReq;
 import CoBo.ChatbotChat.Data.Dto.Prof.Res.ProfStdGetElementRes;
 import CoBo.ChatbotChat.Data.Dto.Prof.Res.ProfStdGetRes;
@@ -70,5 +71,22 @@ public class ChatServiceImpl implements ChatService {
             chatGetElementResList.add(new ProfStdGetElementRes(professorChat));
 
         return new ResponseEntity<>(new ProfStdGetRes(chatGetElementResList), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<HttpStatus> postStudent(StudentPostReq studentPostReq, String authorization) {
+
+        String token = authorization.split(" ")[1];
+
+        Integer studentId = jwtTokenProvider.getStudentId(token);
+
+        chatRoomRepository.updateIfExistElseInsert(
+                studentId,
+                ChatStateEnum.WAITING.ordinal(),
+                jwtTokenProvider.getUserName(token));
+
+        professorChatRepository.insertProfessorChat(studentId, studentPostReq.getComment(), true);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
