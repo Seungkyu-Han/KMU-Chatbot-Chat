@@ -37,6 +37,9 @@ dependencies {
 
 	implementation 'com.google.cloud:google-cloud-dialogflow:4.18.0'
 
+	//jdbc
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.0.4'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
 
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
