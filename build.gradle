@@ -35,6 +35,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
 
+	implementation 'com.google.cloud:google-cloud-dialogflow:4.18.0'
+
 	//jdbc
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.0.4'
 	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
