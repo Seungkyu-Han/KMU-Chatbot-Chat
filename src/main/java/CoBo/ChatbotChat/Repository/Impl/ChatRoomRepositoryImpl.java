@@ -24,7 +24,7 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
                 "JOIN professor_chat pc on cr.student_id = pc.chat_room_student_id " +
                 "WHERE (pc.id, pc.chat_room_student_id) in (" +
                 "SELECT MAX(id), chat_room_student_id FROM professor_chat group by chat_room_student_id)" +
-                "ORDER BY state, student_id LIMIT ?, ?";
+                "ORDER BY state, pc.created_at desc LIMIT ?, ?";
         return jdbcTemplate.query(sql,
                 (resultSet, count) ->
                         new ChatRoomDao(

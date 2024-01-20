@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class ChatbotServiceImpl implements ChatbotService {
     private String projectId;
 
     @Override
-    public ResponseEntity<String> getChat(String question) {
+    public ResponseEntity<String> getChat(String question, Authentication authentication) {
         try(SessionsClient sessionsClient = SessionsClient.create()){
 
             SessionName sessionName = SessionName.of(projectId, String.valueOf(sessionId++));
@@ -36,6 +37,8 @@ public class ChatbotServiceImpl implements ChatbotService {
             QueryInput queryInput = QueryInput.newBuilder().setText(textInput).build();
 
             DetectIntentResponse response = sessionsClient.detectIntent(sessionName, queryInput);
+
+            chatbotChatRepository.insert(Integer.valueOf(authentication.getName()) ,question, response.getQueryResult().getFulfillmentText());
 
             return new ResponseEntity<>(response.getQueryResult().getFulfillmentText(), HttpStatus.OK);
 

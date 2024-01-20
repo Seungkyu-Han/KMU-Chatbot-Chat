@@ -1,6 +1,6 @@
 package CoBo.ChatbotChat.Data.Entity;
 
-import CoBo.ChatbotChat.Data.Entity.Embedded.ProfessorChatId;
+import CoBo.ChatbotChat.Data.Entity.Embedded.ChatbotChatId;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class ChatbotChat {
 
     @EmbeddedId
-    private ProfessorChatId professorChatId;
+    private ChatbotChatId chatbotChatId;
 
     private String question;
 
