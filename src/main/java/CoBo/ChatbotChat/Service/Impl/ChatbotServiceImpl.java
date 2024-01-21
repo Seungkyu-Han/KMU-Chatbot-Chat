@@ -20,8 +20,6 @@ public class ChatbotServiceImpl implements ChatbotService {
 
     private final ChatbotChatRepository chatbotChatRepository;
 
-    private static int sessionId = 0;
-
     @Value("${dialogFlow.projectId}")
     private String projectId;
 
@@ -29,7 +27,7 @@ public class ChatbotServiceImpl implements ChatbotService {
     public ResponseEntity<String> getChat(String question, Authentication authentication) {
         try(SessionsClient sessionsClient = SessionsClient.create()){
 
-            SessionName sessionName = SessionName.of(projectId, String.valueOf(sessionId++));
+            SessionName sessionName = SessionName.of(projectId, String.valueOf(authentication.getName()));
 
             TextInput.Builder textInput =
                     TextInput.newBuilder().setText(question).setLanguageCode("ko");
