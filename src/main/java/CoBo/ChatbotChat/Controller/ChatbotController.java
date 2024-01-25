@@ -16,6 +16,11 @@ public class ChatbotController {
     private final ChatbotService chatbotService;
 
     @GetMapping("/chat")
+    public ResponseEntity<String> getChatOld(@RequestParam String question, @Parameter(hidden = true)Authentication authentication){
+        return chatbotService.getChat(question, authentication);
+    }
+
+    @GetMapping("/api/chat")
     public ResponseEntity<String> getChat(@RequestParam String question, @Parameter(hidden = true)Authentication authentication){
         return chatbotService.getChat(question, authentication);
     }
