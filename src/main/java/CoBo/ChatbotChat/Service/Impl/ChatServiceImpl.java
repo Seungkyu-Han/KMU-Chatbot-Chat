@@ -33,7 +33,7 @@ public class ChatServiceImpl implements ChatService {
     public ResponseEntity<ProfStdGetRes> get(Integer studentId) {
 
         List<ProfessorChat> professorChatList = professorChatRepository.findByStudentId(studentId);
-        chatRoomRepository.updateStateById(studentId, ChatStateEnum.CONFIRMATION.ordinal());
+        chatRoomRepository.updateStateByIdAndState(studentId, ChatStateEnum.WAITING.ordinal(), ChatStateEnum.CONFIRMATION.ordinal());
 
         ArrayList<ProfStdGetElementRes> chatGetElementResList = new ArrayList<>();
 

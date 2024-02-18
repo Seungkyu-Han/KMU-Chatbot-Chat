@@ -40,6 +40,12 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
     }
 
     @Override
+    public void updateStateByIdAndState(Integer studentId, int cur_state, int change_state) {
+        String sql = "UPDATE chat_room SET state = ? WHERE student_id = ? and state = ?";
+        jdbcTemplate.update(sql, change_state, studentId, cur_state);
+    }
+
+    @Override
     @Transactional
     public void updateIfExistElseInsert(Integer studentId, int state, String name) {
         String sql = "INSERT INTO chat_room (student_id, state, name) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE state = ?, name = ?";
