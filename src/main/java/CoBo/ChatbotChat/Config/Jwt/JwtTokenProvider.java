@@ -52,12 +52,4 @@ public class JwtTokenProvider {
                 .getBody()
                 .get("userStudentId", Integer.class);
     }
-
-    public String getUserName(String token){
-        return Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody()
-                .get("userName", String.class);
-    }
 }

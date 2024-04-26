@@ -82,8 +82,7 @@ public class ChatServiceImpl implements ChatService {
 
         chatRoomRepository.updateIfExistElseInsert(
                 studentId,
-                ChatStateEnum.WAITING.ordinal(),
-                jwtTokenProvider.getUserName(token));
+                ChatStateEnum.WAITING.ordinal());
 
         professorChatRepository.insertProfessorChat(studentId, studentPostReq.getComment(), true);
 
