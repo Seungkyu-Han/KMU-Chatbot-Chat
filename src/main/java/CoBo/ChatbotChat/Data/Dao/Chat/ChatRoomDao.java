@@ -12,17 +12,14 @@ public class ChatRoomDao {
 
     private Integer student_id;
 
-    private String name;
-
     private ChatStateEnum state;
 
     private String comment;
 
     private LocalDateTime created_at;
 
-    public ChatRoomDao(Integer student_id, String name, Integer state, String comment, Timestamp created_at) {
+    public ChatRoomDao(Integer student_id, Integer state, String comment, Timestamp created_at) {
         this.student_id = student_id;
-        this.name = name;
         this.state = ChatStateEnum.values()[state];
         this.comment = comment;
         this.created_at = created_at.toLocalDateTime();

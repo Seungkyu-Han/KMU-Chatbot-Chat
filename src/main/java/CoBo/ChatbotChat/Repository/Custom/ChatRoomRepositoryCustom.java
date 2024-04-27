@@ -10,7 +10,7 @@ public interface ChatRoomRepositoryCustom {
 
     void updateStateById(Integer studentId, int state);
 
-    void updateIfExistElseInsert(Integer studentId, int state, String name);
+    void updateIfExistElseInsert(Integer studentId, int state);
 
     void updateStateByIdAndState(Integer studentId, int cur_state, int change_state);
 }

@@ -18,6 +18,4 @@ public class ChatRoom {
     @Enumerated(EnumType.ORDINAL)
     private ChatStateEnum state;
 
-    @Column(length = 30)
-    private String name;
 }
